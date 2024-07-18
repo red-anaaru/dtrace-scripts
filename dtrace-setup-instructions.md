@@ -18,7 +18,9 @@ Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion' | Se
 ```
 
 You can a supported Windows version, if the `CurrentBuildNumber` value is greater than 18980, for non-Server SKUs. And 18975 for Windows Server SKUs.
+
 2. Download dtrace from here: [Download DTrace on Windows](https://www.microsoft.com/download/details.aspx?id=100441)
+
 3. Ensure Bitlocker is disabled.
 ![Control Panel > System and Security > Bitlocker Drive Encryption](.\image.png)
 
@@ -60,6 +62,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl\LiveKe
   ```
 
 8. Reboot the machine - `shutdown /r /t 0`
+
 9. **_IMPORTANT:_** After the machine reboots, turn on bitlocker.
 
 ### Collecting live kernel dump

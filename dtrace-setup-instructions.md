@@ -20,7 +20,7 @@ Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion' | Se
 You can a supported Windows version, if the `CurrentBuildNumber` value is greater than 18980, for non-Server SKUs. And 18975 for Windows Server SKUs.
 2. Download dtrace from here: [Download DTrace on Windows](https://www.microsoft.com/download/details.aspx?id=100441)
 3. Ensure Bitlocker is disabled.
-![Control Panel > System and Security > Bitlocker Drive Encryption](image-1.png)
+![Control Panel > System and Security > Bitlocker Drive Encryption](.\image.png)
 
 4. Install dtrace by running the installer by running this command from admin PowerShell:
   
@@ -60,6 +60,7 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl\LiveKe
   ```
 
 8. Reboot the machine - `shutdown /r /t 0`
+9. **_IMPORTANT:_** After the machine reboots, turn on bitlocker.
 
 ### Collecting live kernel dump
 
@@ -93,3 +94,5 @@ syscall:::return
   ```
 
 When the error code is returned by the system call, the live kernel dump will be captured in the `livedumps` folder and dtrace will exit. But leave the machine as is, so that the kernel dump collection can complete. Depending on the RAM size, it might take ~10-15 minutes to complete.
+
+Look in `%SystemDrive%\livedumps` for the kernel dump file. And it should be few GBs in size.

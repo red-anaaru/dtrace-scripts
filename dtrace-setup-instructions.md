@@ -56,8 +56,9 @@ REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl\LiveKe
 7. Setup symbols cache by running the following command:
 
   ```PowerShell
-  mkdir $env:SystemDrive\symbols
-  $sym_path = "srv*{0}*https://msdl.microsoft.com/download/symbols" -f $env:SystemDrive\symbols
+  $sym_path = $env:SystemDrive + "\symbols"
+  mkdir $sym_path
+  $sym_path = "srv*{0}*https://msdl.microsoft.com/download/symbols" -f $sym_path
   [System.Environment]::SetEnvironmentVariable('_NT_SYMBOL_PATH', $sym_path, [System.EnvironmentVariableTarget]::User)
   ```
 
@@ -99,3 +100,13 @@ syscall:::return
 When the error code is returned by the system call, the live kernel dump will be captured in the `livedumps` folder and dtrace will exit. But leave the machine as is, so that the kernel dump collection can complete. Depending on the RAM size, it might take ~10-15 minutes to complete.
 
 Look in `%SystemDrive%\livedumps` for the kernel dump file. And it should be few GBs in size.
+
+### Disabling dtrace
+
+After you are done with the live kernel dump collection, you can disable dtrace by running:
+  
+  ```cmd
+  bcdedit /set dtrace OFF
+  ```
+
+Also, make sure you re-enable Bitlocker.
